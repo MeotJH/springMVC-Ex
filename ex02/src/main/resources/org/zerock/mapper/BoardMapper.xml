@@ -3,7 +3,7 @@
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
-	<![CDATA[select * from tbl_board where bno >0]]>
+	<![CDATA[select * from tbl_board where bno >0]]>  <!--  왜 얘만 cdata를 쓰지? -->
 	</select>
 	
 	<insert id="insert">
@@ -36,6 +36,12 @@
 		updateDate = sysdate
 		where bno = #{bno}
 	</update>
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[select bno, title, content, writer, regdate, updatedate from
+	( select /*+INDEX_DESC(tbl_board pk_board)*/ rownum rn, bno, title, content, writer, regdate, updatedate from tbl_board where rownum <= #{pageNum} * #{amount} )
+	where rn > (#{pageNum}-1) * #{amount} ]]> <!--  저 #{} 요소들 쓸 수 있는 이유가 보드맵퍼에 선언해놨고 거기에 파라미터가 크리테리아 라서 크리테리아 안에 있는 변수들 활용 가능한건가? -->
+	</select>
 	
 
 </mapper>
