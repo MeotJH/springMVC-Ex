@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.pageDTO;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class BoardController {
 		
 		log.info("list");
 		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new pageDTO(cri, 123));
 	}
 	
 	@PostMapping("/register")
