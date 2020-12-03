@@ -37,7 +37,7 @@
 								<td><c:out value="${board.bno}" /></td>
 								<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
 	
-								<td><a class='move' href='/board/get?bno=<c:out value="${board.bno}"/>' target='_blank'>
+								<td><a class='move' href='<c:out value="${board.bno}"/>' target='_blank'>
 										<c:out value="${board.title}" />
 								</a></td>
 	
@@ -139,6 +139,17 @@
 				actionForm.submit();
 				
 			});
+			
+			$(".move").on("click", function(e){
+				
+				e.preventDefault();
+				actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+				actionForm.attr("action","/board/get");
+				actionForm.submit();
+				
+			});
+			
+			
 			
 		});
 		
