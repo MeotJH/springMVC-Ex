@@ -86,6 +86,17 @@ console.log("JS TEST");
 
 var bnoValue = '<c:out value="${board.bno}"/>';
 
+
+//댓글 리스트 불러오는제이쿼
+replyService.getList({bno:bnoValue, page:1}, function(list){
+	
+	for(var i = 0, len = list.length||0 ; i < len ; i ++){
+		console.log(list[i]);
+	}
+	
+});
+
+//댓글 추가하는 제이쿼리
 replyService.add(
 		{reply:"JS test", replyer:"tester", bno:bnoValue}
 		,
@@ -93,6 +104,30 @@ replyService.add(
 			alert("Result:" + result);
 		}
 	);
+
+//댓글 삭제하는 코드
+replyService.remove(31, function(count){
+
+	console.log(count);
+	
+	if( count === "success"){
+		alert("REMOVE");
+	}
+}, function(err){
+	
+	alert("ERROR....");
+});
+
+//댓글 수정하는 코드
+replyService.update({rno : 22, bno:bnoValue, reply : "modified Reply......"}, function(result){
+
+	alert("수정 완료...")
+});
+
+replyService.get(10, function(data){
+	
+	console.log(data);
+};
 
 
 </script>
