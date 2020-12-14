@@ -95,7 +95,7 @@ var replyService = (function(){
 				
 				callback(result);
 			}
-		}),
+		})
 		.fail(function(xhr, status, err){
 			
 			if(error){
