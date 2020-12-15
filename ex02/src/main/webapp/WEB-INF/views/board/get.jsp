@@ -127,7 +127,7 @@ replyService.update({rno : 22, bno:bnoValue, reply : "modified Reply......"}, fu
 replyService.get(10, function(data){
 	
 	console.log(data);
-};
+});
 
 
 </script>
