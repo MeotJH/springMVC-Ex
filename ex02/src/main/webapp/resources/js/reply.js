@@ -105,7 +105,7 @@ var replyService = (function(){
 	}	
 	
 	
-	//id 924 3704 8096    비번  purplemintasdasd
+	
 	
 	
 	return {
