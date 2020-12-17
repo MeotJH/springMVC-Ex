@@ -102,8 +102,39 @@ var replyService = (function(){
 				error();
 			}
 		});
-	}	
+	}
 	
+		
+	function displayTime(timeValue){
+		
+		var today = new Date();
+		
+		var gap = today.getTime() - timeValue;
+		
+		var dateObj = new Date(timeValue);
+		
+		var str = "";
+		
+		if ( gap < (1000 * 60 * 60 * 24 )){
+			
+			// 갭이 저 숫자들보다 작다는게 무슨 의미지? -> 60*60*24 는 하루를 초로 계산한거고 *1000은 밀리세컨드로 변환한것 즉 gap(지금날짜 - timevalue)이게 밀리세컨드로 값을 가지고 있나봄 그러니,
+			// if문 조건은 하루보다 gap이라는 변수가 작다면 라는 뜻
+			
+			var hh = dateObj.getHours();
+			var mm = dateObj.getMinutes();
+			var ss = dateObj.getSeconds();
+			
+			return [ (hh > 9 ? '' : '0') + hh, ':', (mm > 9 ? '' : '0') + mm , ':' , ( ss > 9 ? '' : '0') + ss ].join('');
+		} else {
+			
+			var yy = dateObj.getFullYear();
+			var mm = dateObj.getMonth() + 1 ; 
+			var dd = dateObj.getDate();
+			
+			return [ yy, '/', ( mm > 9 ?'' : '0') + mm, '/', ( dd > 9 ? '' : '0') + dd].join('');
+			
+		}
+	};
 	
 	
 	
@@ -113,7 +144,8 @@ var replyService = (function(){
 		getList : getList,
 		remove : remove,
 		update : update,
-		get : get
+		get : get,
+		displayTime : displayTime
 		};
 
 

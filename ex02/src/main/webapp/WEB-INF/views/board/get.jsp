@@ -72,9 +72,11 @@
 	<div class="col-lg-12">
 	
 		<div class="panel panel-default">
+				
 		
 			<div class = "panel-heading">
 				<i class="fa fa-comments fa-fw"></i> Reply
+				<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply</button>
 			</div>
 			<div class="panel-body">
 				
@@ -107,10 +109,87 @@
   <!-- end panel -->
 </div>
 <!-- /.row -->
+<!--  모달창 코드 -->
+	
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Reply</label>
+					<input class="form-control" name="reply" value="New Reply!!!!">
+				</div>
+				<div class="form-group">
+					<label>Reply Date</label>
+					<input class="form-control" name="replyDate" value=''>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='modalModBtn' type="button" class="btn btn-warning">Modify</button>
+				<button id='modalRemoveBtn' type="button" class="btn btn-danger">Remove</button>
+				<button id='modalCloseBtn' type="button" class="btn btn-default" data-dismiss="modal">close</button>
+				<button id='modalClassBtn' type="button" class="btn btn-default" data-dismiss='modal'>close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
+<!--  모달창 코드  끝 --> 
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
 <script>
+
+$(document).ready(function(){
+
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	var replyUL = $(".chat");
+	
+		showList(1);
+		
+	function showList(page){
+		
+		replyService.getList({bno:bnoValue,page: page || 1}, function(list){
+		
+			var str="";
+			
+			if(list == null || list.length == 0 ){
+				
+				replyUL.html("");
+				
+				return;
+			}
+			
+			for ( var i = 0 , len = list.length || 0 ; i< len ; i ++){
+				
+				str+= "<li class='left clearfix' data-rno = '"+list[i].rno+"'>";
+				str+= " <div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+				str+= "   <small class='pull-right text-muted'>"+replyService.displayTime(list[i].replyDate)+"</small></div>";
+				str+= "  <p>"+list[i].reply+"</p></div></li>"
+				
+				
+				
+			}
+			
+			replyUL.html(str);
+			
+			//클래스 chat의 내용을 str로 채우는데 str 내용에 DB에 저장된 값들을 가져오는 코드가 되어있음
+			
+		});// end function
+	}//end showList
+	
+	var modal = $(".modal");
+	var modalInputReply = modal.find("input[name.'reply']");
+	
+	
+});
+
+</script>
+
+<!--  <script>
 
 console.log("=================");
 console.log("JS TEST");
@@ -161,7 +240,7 @@ replyService.get(10, function(data){
 });
 
 
-</script>
+</script>-->
 
 <script type="text/javascript">
 $(document).ready(function() {
